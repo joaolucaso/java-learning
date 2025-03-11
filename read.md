@@ -1,4 +1,4 @@
-# Sobrecarga, Construtores e Associações em JAVA - Do ZERO a VAGA #3
+
  - Java compiler
 ![oi](https://media.geeksforgeeks.org/wp-content/cdn-uploads/20220802233816/Java-Compiler-Step-by-Step.png)
 
@@ -24,6 +24,8 @@ Linguagem da maquina basicamente zero e um.
 
 # Condicionais em Java
  - if/else: Explicação de como a condição if é avaliada e o bloco de código correspondente é executado se a condição for verdadeira. O bloco else é executado se a condição if for falsa. Também é abordada a possibilidade de usar if sozinho e o encadeamento de múltiplos if/else.
+
+ 
 ![img_1.png](img_1.png)
 
 - switch/case: Apresentação como uma alternativa ao uso de múltiplos if/else para testar o valor de uma variável contra diferentes casos. É explicado o uso das palavras-chave case para definir as opções, break para delimitar o final de cada caso e default para o caso em que nenhum dos valores corresponda.

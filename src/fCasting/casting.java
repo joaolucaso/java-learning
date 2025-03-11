@@ -10,7 +10,7 @@ public class casting {
         int agoraEuSouUmInt = (int) like;
 
         String castingDiferente = "90";
-        System.out.println(castingDiferente + "eu sou um String");
+        System.out.println(castingDiferente + "eu sou uma String");
 
         int int2 = Integer.parseInt(castingDiferente);
 
