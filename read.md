@@ -63,14 +63,17 @@ Em Java, vetores são representados por arrays, que são coleções ordenadas de
 ````
 
 # Loops
+
 - Loop for 
 O loop for é como uma contagem. Você diz ao computador para contar de 1 até 5, e ele vai fazer isso sozinho
 ````
 for (int i = 1; i <= 5; i++) {
     System.out.println(i);
 }
+
 ````
--Loop While
+
+- Loop While
 No loop while, você diz ao computador para fazer algo enquanto uma condição for verdadeira.
 ````
 int i = 1;
@@ -78,6 +81,7 @@ while (i <= 5) {
     System.out.println(i);
     i++;  // Aumenta 1 a cada vez
 }
+
 ````
 - Loop do-while
   Esse loop é parecido com o while, mas com uma diferença: ele vai fazer o trabalho pelo menos uma vez, mesmo que a condição não seja verdadeira.
@@ -87,7 +91,9 @@ do {
     System.out.println(i);
     i++;  // Aumenta 1 a cada vez
 } while (i <= 5);
+
 ````
+
 - Loop for-each
   Esse loop é usado quando você tem uma lista de coisas e quer fazer a mesma coisa com cada uma delas, como se fosse uma fila de brinquedos para brincar.
 ````
@@ -95,5 +101,41 @@ int[] numeros = {10, 20, 30, 40, 50};
 
 for (int num : numeros) {
     System.out.println(num);
+}
+````
+
+# Casting
+ Casting é o processo de conversão de um tipo de dado para outro em Java. Existem dois tipos principais de casting:
+
+1. Casting Implícito (Widening Casting)
+Acontece automaticamente quando convertemos um tipo menor para um tipo maior Exemplo: de int para double.
+
+2. Casting Explícito (Narrowing Casting)
+Precisa ser feito manualmente quando convertemos um tipo maior para um tipo menor.
+Exemplo: de double para int.
+
+````
+EX:1
+public class Main {
+    public static void main(String[] args) {
+        int numeroInt = 10;
+        double numeroDouble = numeroInt; // Conversão automática
+
+        System.out.println("Número inteiro: " + numeroInt);
+        System.out.println("Número convertido para double: " + numeroDouble);
+    }
+}
+````
+
+````
+EX:2
+public class Main {
+    public static void main(String[] args) {
+        double numeroDouble = 9.78;
+        int numeroInt = (int) numeroDouble; // Conversão manual
+
+        System.out.println("Número double: " + numeroDouble);
+        System.out.println("Número convertido para int: " + numeroInt);
+    }
 }
 ````
