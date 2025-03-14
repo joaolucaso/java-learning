@@ -141,3 +141,208 @@ public class Main {
     }
 }
 ````
+
+# Modificadores de acesso
+
+- Private
+
+O modificador mais restritivo.
+Somente a própria classe pode acessar o atributo ou método.
+Nenhuma outra classe (nem mesmo as do mesmo pacote) pode acessá-lo
+
+✅ Quando Usar?
+Quando queremos proteger dados sensíveis e evitar alterações indevidas.
+Quando o acesso direto não faz sentido (exemplo: um saldo bancário).
+
+````
+class ContaBancaria {
+    private double saldo; // Apenas a própria classe pode acessar
+
+    // Construtor
+    public ContaBancaria(double saldoInicial) {
+        this.saldo = saldoInicial;
+    }
+
+    // Método público para acessar o saldo
+    public double getSaldo() {
+        return saldo;
+    }
+
+    // Método público para modificar o saldo
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+        } else {
+            System.out.println("Valor inválido para depósito!");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ContaBancaria conta = new ContaBancaria(1000);
+
+        // System.out.println(conta.saldo); // ❌ ERRO: saldo é private
+
+        System.out.println("Saldo: " + conta.getSaldo()); // ✅ OK: acessando via método público
+
+        conta.depositar(500);
+        System.out.println("Saldo atualizado: " + conta.getSaldo());
+    }
+}
+````
+💡 Explicação
+saldo é private, então não pode ser acessado diretamente.
+Criamos métodos públicos (getSaldo() e depositar()) para permitir acesso controlado.
+
+ 
+- Default
+
+Não escrever um modificador significa que estamos usando acesso padrão (default).
+Acesso permitido apenas dentro do mesmo pacote.
+Classes de outro pacote não podem acessar, mesmo que sejam subclasses.
+
+✅ Quando Usar ?
+Quando queremos acesso apenas dentro do mesmo pacote, mas não em outros pacotes.
+Em códigos que devem ser protegidos de acesso externo, mas visíveis internamente.
+
+
+Arquivo: pessoa.java
+````
+class Pessoa {  // Sem modificador → só pode ser acessado no mesmo pacote
+    String nome;  // Sem modificador → acesso apenas no mesmo pacote
+
+    void dizerOla() {  // Sem modificador → só pode ser chamado no mesmo pacote
+        System.out.println("Olá, meu nome é " + nome);
+    }
+}
+````
+
+Arquivo: main.java (no mesmo pacote) ✅
+````
+public class Main {
+    public static void main(String[] args) {
+        Pessoa pessoa = new Pessoa();
+        pessoa.nome = "Carlos"; // ✅ OK: Está no mesmo pacote
+        pessoa.dizerOla();
+    }
+}
+````
+
+Arquivo: outraClasse.java(Em outro pacote)❌
+````
+import pacote.Pessoa;
+
+public class OutraClasse {
+    public static void main(String[] args) {
+        Pessoa pessoa = new Pessoa();
+        pessoa.nome = "Ana"; // ❌ ERRO: nome tem acesso default e estamos em outro pacote
+    }
+}
+````
+💡 Explicação
+Dentro do mesmo pacote, tudo funciona normalmente.
+Fora do pacote, ocorre erro pois os atributos e métodos não são visíveis.
+
+- Protected
+
+Acessível no mesmo pacote (como o default).
+Mas também pode ser acessado por subclasses (mesmo que estejam em outro pacote).
+
+✅ Quando Usar?
+Quando queremos permitir acesso dentro do mesmo pacote e para subclasses externas.
+Quando um método deve ser herdado, mas não acessado diretamente fora da hierarquia de classes.
+
+Arquivo: animal.java
+
+````
+class Animal {
+    protected String especie; // Pode ser acessado por subclasses
+
+    protected void fazerSom() {
+        System.out.println("Som de um animal...");
+    }
+}
+````
+
+Arquivo: cachorro.java(mesmo pacote)
+
+````
+class Cachorro extends Animal {
+    public void latir() {
+        System.out.println("O cachorro está latindo! Ele é um " + especie);
+    }
+}
+````
+
+Arquivo: main.java (mesmo pacote)
+
+````
+public class Main {
+    public static void main(String[] args) {
+        Cachorro dog = new Cachorro();
+        dog.especie = "Mamífero"; // ✅ OK: protected permite acesso no mesmo pacote
+        dog.fazerSom(); // ✅ OK
+        dog.latir();
+    }
+}
+````
+
+Arquivo: gato.java (outro pacote)
+
+````
+import pacote.Animal;
+
+class Gato extends Animal {
+    public void miar() {
+        System.out.println("O gato está miando! Ele é um " + especie); // ✅ OK, pois Gato é uma subclasse
+    }
+}
+````
+
+- Public
+
+Sem restrições: pode ser acessado de qualquer lugar.
+Usado para métodos e classes que devem estar disponíveis globalmente.
+
+✅ Quando Usar?
+Quando algo deve ser acessível de qualquer lugar.
+Para métodos que representam ações essenciais da classe.
+
+````
+class Pessoa {
+    public String nome; // Pode ser acessado de qualquer lugar
+
+    public void dizerOla() {
+        System.out.println("Olá, meu nome é " + nome);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Pessoa pessoa = new Pessoa();
+        pessoa.nome = "Carlos"; // ✅ OK
+        pessoa.dizerOla(); // ✅ OK
+    }
+}
+````
+
+💡 Explicação
+Como nome e dizerOla() são públicos, podem ser acessados de qualquer lugar.
+
+
+# POO Programção Orientada  a Ojetos
+
+A Programação Orientada a Objetos (POO) é um paradigma de programação baseado no conceito de objetos, que representam entidades do mundo real. Esses objetos possuem atributos (características) e métodos (ações).
+
+### Principais conceitos
+
+- Classe: É um modelo ou molde que define as características (atributos) e comportamentos (métodos) de um objeto.
+
+- Objeto: É uma instância (cópia real) de uma classe, com dados próprios.
+
+-
+
+ 
+
+
