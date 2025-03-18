@@ -340,9 +340,414 @@ A Programação Orientada a Objetos (POO) é um paradigma de programação basea
 - Classe: É um modelo ou molde que define as características (atributos) e comportamentos (métodos) de um objeto.
 
 - Objeto: É uma instância (cópia real) de uma classe, com dados próprios.
+---
+ ### Classes e Objetos
 
--
+````
+class Carro {
+    // Atributos (características)
+    String marca;
+    String modelo;
+    int ano;
 
+    // Método (comportamento)
+    void exibirInfo() {
+        System.out.println("Carro: " + marca + " " + modelo + " (" + ano + ")");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Criando um objeto da classe Carro
+        Carro carro1 = new Carro();
+        carro1.marca = "Toyota";
+        carro1.modelo = "Corolla";
+        carro1.ano = 2022;
+        
+        Carro carro2 = new Carro();
+        carro2.marca = "Ford";
+        carro2.modelo = "Mustang";
+        carro2.ano = 2023;
+
+        // Chamando o método do objeto
+        carro1.exibirInfo();
+        carro2.exibirInfo();
+    }
+}
+````
+````
+SAIDA:  
+Carro: Toyota Corolla (2022)
+Carro: Ford Mustang (2023)
+````
+
+Explicação
+Criamos a classe Carro com atributos e um método (exibirInfo()).
+No main(), criamos objetos da classe Carro e atribuímos valores aos atributos.
+O método exibirInfo() imprime os detalhes do carro.
+
+---
+
+---
+# Encapsulamento
+Protege os detalhes internos de uma classe, permitindo que os desenvolvedores se concentrem nas operações relevantes. 
+
+````
+Encapsulamento:
+Protege os atributos do objeto, permitindo acesso apenas através de métodos.
+Utilizamos modificadores de acesso:
+private → Apenas acessível dentro da própria classe.
+public → Pode ser acessado de qualquer lugar.
+protected → Acessível dentro da mesma classe e subclasses.
+
+class ContaBancaria {
+    private String titular;
+    private double saldo;
+
+    // Construtor
+    public ContaBancaria(String titular, double saldo) {
+        this.titular = titular;
+        this.saldo = saldo;
+    }
+
+    // Método para depositar dinheiro
+    public void depositar(double valor) {
+        saldo += valor;
+    }
+
+    // Método para sacar dinheiro
+    public boolean sacar(double valor) {
+        if (valor <= saldo) {
+            saldo -= valor;
+            return true;
+        }
+        return false;
+    }
+
+    // Método para exibir saldo
+    public void mostrarSaldo() {
+        System.out.println("Saldo de " + titular + ": R$ " + saldo);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ContaBancaria conta = new ContaBancaria("João", 1000);
+
+        conta.depositar(500);
+        conta.sacar(300);
+        conta.mostrarSaldo();  // Saída: Saldo de João: R$ 1200.0
+
+        // Não podemos acessar conta.saldo diretamente porque é privado
+        // System.out.println(conta.saldo); // Isso daria erro
+    }
+}
+
+
+````
+
+Explicação
+O atributo saldo é privado (private), garantindo segurança.
+Criamos métodos públicos (depositar(), sacar(), mostrarSaldo()) para controlar o acesso.
+Evitamos manipulação direta dos atributos, protegendo os dados.
+---
+
+
+---
+# Hereança 
+permite que uma classe herde características e comportamentos de outra, evitando repetição de código.
  
+````
+Herança permite que uma classe herde atributos e métodos de outra.
+A classe que herda é chamada de subclasse e a que fornece os atributos/métodos é chamada de superclasse.
+Utilizamos a palavra-chave extends.
+
+
+// Superclasse
+class Animal {
+    String nome;
+
+    public Animal(String nome) {
+        this.nome = nome;
+    }
+
+    void emitirSom() {
+        System.out.println("O animal faz um som.");
+    }
+}
+
+// Subclasse Cachorro herda de Animal
+class Cachorro extends Animal {
+    public Cachorro(String nome) {
+        super(nome); // Chama o construtor da superclasse
+    }
+
+    // Sobrescrevendo o método emitirSom()
+    @Override
+    void emitirSom() {
+        System.out.println(nome + " está latindo!");
+    }
+}
+
+// Subclasse Gato herda de Animal
+class Gato extends Animal {
+    public Gato(String nome) {
+        super(nome);
+    }
+
+    @Override
+    void emitirSom() {
+        System.out.println(nome + " está miando!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Cachorro cachorro = new Cachorro("Rex");
+        Gato gato = new Gato("Mimi");
+
+        cachorro.emitirSom();  // Saída: Rex está latindo!
+        gato.emitirSom();  // Saída: Mimi está miando!
+    }
+}
+
+
+
+````
+Explicação
+Cachorro e Gato herdam atributos e métodos da classe Animal.
+Ambos sobrescrevem o método emitirSom(), alterando seu comportamento.
+
+---
+
+---
+# Polimorfismo
+permite que métodos tenham diferentes comportamentos dependendo de objetos que os chama.
+
+````
+Polimorfismo permite que métodos tenham diferentes implementações em classes diferentes.
+Existem dois tipos principais:
+Polimorfismo de Sobrescrita (Override) → A subclasse redefine um método da superclasse.
+Polimorfismo de Sobrecarga (Overload) → Criamos métodos com o mesmo nome, mas assinaturas diferentes.
+
+class Forma {
+    void calcularArea() {
+        System.out.println("A forma não tem área definida.");
+    }
+}
+
+class Quadrado extends Forma {
+    private double lado;
+
+    public Quadrado(double lado) {
+        this.lado = lado;
+    }
+
+    @Override
+    void calcularArea() {
+        System.out.println("Área do quadrado: " + (lado * lado));
+    }
+}
+
+class Circulo extends Forma {
+    private double raio;
+
+    public Circulo(double raio) {
+        this.raio = raio;
+    }
+
+    @Override
+    void calcularArea() {
+        System.out.println("Área do círculo: " + (3.14 * raio * raio));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Forma f1 = new Quadrado(4);
+        Forma f2 = new Circulo(3);
+
+        f1.calcularArea();  // Saída: Área do quadrado: 16.0
+        f2.calcularArea();  // Saída: Área do círculo: 28.26
+    }
+}
+
+````
+Explicação:
+Quadrado e Circulo sobrescrevem calcularArea() com comportamentos diferentes.
+
+---
+
+# Classes Abstratas 
+(abstratct), O que é?
+  Uma classe que não pode ser instanciada diretamente.
+  Pode ter métodos concretos (com implementação) e métodos abstratos (sem implementação).
+  Serve como modelo para outras classes, forçando-as a implementar métodos abstratos
+
+````
+✅ Quando usar?
+Quando queremos compartilhar código comum entre classes relacionadas.
+Quando alguns métodos têm implementação padrão, mas outros devem ser obrigatoriamente implementados pelas subclasses.
+
+// Classe abstrata
+abstract class Animal {
+    String nome;
+
+    // Construtor
+    public Animal(String nome) {
+        this.nome = nome;
+    }
+
+    // Método concreto (tem implementação)
+    public void dormir() {
+        System.out.println(nome + " está dormindo...");
+    }
+
+    // Método abstrato (precisa ser implementado pelas subclasses)
+    abstract void fazerSom();
+}
+
+// Subclasse concreta
+class Cachorro extends Animal {
+    public Cachorro(String nome) {
+        super(nome);
+    }
+
+    // Implementação obrigatória do método abstrato
+    public void fazerSom() {
+        System.out.println(nome + " está latindo: Au au!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Animal a = new Animal("Bicho"); // ❌ ERRO! Não pode instanciar uma classe abstrata
+
+        Cachorro c = new Cachorro("Rex");
+        c.dormir(); // ✅ Usa o método concreto da classe abstrata
+        c.fazerSom(); // ✅ Implementação obrigatória do método abstrato
+    }
+}
+
+````
+💡 Explicação
+Criamos a classe Animal como abstrata.
+dormir() tem implementação e pode ser usada por todas as subclasses.
+fazerSom() é abstrato, então cada animal precisa implementar de forma diferente.
+Cachorro herda de Animal e implementa o método obrigatório fazerSom().
+Não podemos instanciar Animal, mas podemos instanciar Cachorro.
+
+---
+
+# Interface 
+(Interface), O que é?
+  Uma "promessa" de que uma classe terá certos métodos.
+  Não pode conter implementação (até o Java 8, que introduziu métodos default).
+  Uma classe pode implementar várias interfaces, mas só pode herdar de uma única classe.
+````
+✅ Quando usar?
+Quando diversas classes diferentes precisam seguir um padrão.
+Quando queremos polimorfismo sem herança.
+Quando queremos múltipla implementação (já que Java não suporta herança múltipla, mas suporta múltiplas interfaces).
+
+// Definição da interface
+interface Animal {
+    void fazerSom(); // Método sem implementação (obrigatório)
+}
+
+// Classe que implementa a interface
+class Gato implements Animal {
+    public void fazerSom() {
+        System.out.println("O gato está miando: Miau!");
+    }
+}
+
+// Outra classe que implementa a interface
+class Passaro implements Animal {
+    public void fazerSom() {
+        System.out.println("O pássaro está cantando: Piu piu!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal gato = new Gato();
+        Animal passaro = new Passaro();
+
+        gato.fazerSom();    // ✅ Saída: O gato está miando: Miau!
+        passaro.fazerSom(); // ✅ Saída: O pássaro está cantando: Piu piu!
+    }
+}
+
+
+````
+💡 Explicação
+Criamos a interface Animal, que define um comportamento obrigatório (fazerSom()).
+Gato e Passaro implementam Animal e devem obrigatoriamente definir fazerSom().
+Podemos armazenar objetos Gato e Passaro em variáveis do tipo Animal, permitindo polimorfismo.
+---
+
+---
+
+# Herança
+Herança permite que uma classe herde atributos e métodos de outra.
+A classe que herda é chamada de subclasse e a que fornece os atributos/métodos é chamada de superclasse.
+Utilizamos a palavra-chave extends.
+````
+// Superclasse
+class Animal {
+    String nome;
+
+    public Animal(String nome) {
+        this.nome = nome;
+    }
+
+    void emitirSom() {
+        System.out.println("O animal faz um som.");
+    }
+}
+
+// Subclasse Cachorro herda de Animal
+class Cachorro extends Animal {
+    public Cachorro(String nome) {
+        super(nome); // Chama o construtor da superclasse
+    }
+
+    // Sobrescrevendo o método emitirSom()
+    @Override
+    void emitirSom() {
+        System.out.println(nome + " está latindo!");
+    }
+}
+
+// Subclasse Gato herda de Animal
+class Gato extends Animal {
+    public Gato(String nome) {
+        super(nome);
+    }
+
+    @Override
+    void emitirSom() {
+        System.out.println(nome + " está miando!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Cachorro cachorro = new Cachorro("Rex");
+        Gato gato = new Gato("Mimi");
+
+        cachorro.emitirSom();  // Saída: Rex está latindo!
+        gato.emitirSom();  // Saída: Mimi está miando!
+        
+    }
+}
+````
+Explicação
+Cachorro e Gato herdam atributos e métodos da classe Animal.
+Ambos sobrescrevem o método emitirSom(), alterando seu comportamento.
+---
+
+---
 
 
