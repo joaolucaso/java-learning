@@ -750,4 +750,106 @@ Ambos sobrescrevem o método emitirSom(), alterando seu comportamento.
 
 ---
 
+# Enumeração
+
+Em Java, Enumeração (enum) é um tipo especial de classe usado para representar um conjunto fixo de constantes. Ele permite definir um conjunto de valores nomeados que representam diferentes estados ou opções, tornando o código mais legível e seguro.
+
+````
+📌 Sintaxe Básica
+Para criar uma enumeração, usamos a palavra-chave enum. Veja um exemplo:
+
+enum DiaDaSemana {
+    SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA, SABADO, DOMINGO;
+}
+
+Aqui, DiaDaSemana é um enum que contém sete valores fixos.
+````
+
+````
+📌 Uso Básico
+Podemos usar a enumeração assim:
+
+public class ExemploEnum {
+    public static void main(String[] args) {
+        DiaDaSemana hoje = DiaDaSemana.SEGUNDA;
+        System.out.println("Hoje é: " + hoje);
+    }
+}
+------------------------------------------------------------------------------------
+saida:
+Hoje é: SEGUNDA
+
+````
+
+````
+📌 Enums com Construtor e Métodos
+Enums também podem ter atributos e métodos. Vamos criar um exemplo onde cada dia da semana tem um nome mais legível:
+
+enum DiaDaSemana {
+    SEGUNDA("Segunda-feira"),
+    TERCA("Terça-feira"),
+    QUARTA("Quarta-feira"),
+    QUINTA("Quinta-feira"),
+    SEXTA("Sexta-feira"),
+    SABADO("Sábado"),
+    DOMINGO("Domingo");
+
+    private String nomeCompleto;
+
+    // Construtor
+    DiaDaSemana(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+    }
+
+    // Método para obter o nome completo
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+}
+
+public class TesteEnum {
+    public static void main(String[] args) {
+        DiaDaSemana dia = DiaDaSemana.SEXTA;
+        System.out.println("Hoje é: " + dia.getNomeCompleto());
+    }
+}
+-----------------------------------------------------------------
+saida:
+Hoje é: Sexta-feira
+
+````
+
+````
+📌 Métodos Úteis em Enums
+values() – Retorna todos os valores do enum.
+valueOf(String name) – Converte um String para um enum.
+ordinal() – Retorna a posição do item na enumeração (começando do zero).
+
+public class MetodosEnum {
+    public static void main(String[] args) {
+        // Listar todos os valores do enum
+        for (DiaDaSemana dia : DiaDaSemana.values()) {
+            System.out.println(dia + " - Posição: " + dia.ordinal());
+        }
+
+        // Converter String para enum
+        DiaDaSemana diaEscolhido = DiaDaSemana.valueOf("QUARTA");
+        System.out.println("Escolhido: " + diaEscolhido);
+    }
+}
+---------------------------------------------------------------------
+saida:
+SEGUNDA - Posição: 0
+TERCA - Posição: 1
+QUARTA - Posição: 2
+QUINTA - Posição: 3
+SEXTA - Posição: 4
+SABADO - Posição: 5
+DOMINGO - Posição: 6
+Escolhido: QUARTA
+
+````
+---
+
+---
 
