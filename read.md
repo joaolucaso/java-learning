@@ -853,3 +853,250 @@ Escolhido: QUARTA
 
 ---
 
+# Exceções
+As exceções em Java são eventos que ocorrem durante a execução do programa e interrompem o fluxo normal do código. Elas geralmente acontecem por erros inesperados, como divisão por zero, acesso a um índice inválido em um array ou tentativa de abrir um arquivo inexistente.
+
+📌 Hierarquia das Exceções em Java
+Todas as exceções em Java são subclasses da classe Throwable, que tem duas subclasses principais:
+
+Exception (Exceções verificadas)
+
+Devem ser tratadas obrigatoriamente com try-catch ou declaradas com throws.
+Exemplo: IOException, SQLException.
+RuntimeException (Exceções não verificadas)
+
+Ocorrem em tempo de execução e não precisam ser tratadas obrigatoriamente.
+Exemplo: NullPointerException, ArrayIndexOutOfBoundsException.
+Error (Erros graves)
+
+São problemas no próprio Java que o programador não consegue corrigir.
+Exemplo: OutOfMemoryError, StackOverflowError.
+
+🔹 Tratamento de Exceções com try-catch
+O try-catch captura e trata exceções para evitar que o programa seja encerrado abruptamente.
+
+Exemplo:
+
+````
+public class ExemploTryCatch {
+    public static void main(String[] args) {
+        try {
+            int resultado = 10 / 0; // Isso gera uma exceção!
+            System.out.println("Resultado: " + resultado);
+        } catch (ArithmeticException e) {
+            System.out.println("Erro: Divisão por zero não é permitida.");
+        }
+        System.out.println("O programa continua executando.");
+    }
+}
+
+🔹 Saída:
+
+Erro: Divisão por zero não é permitida.
+O programa continua executando.
+
+`````
+
+🔹 Usando finally
+O bloco finally sempre é executado, independentemente de ocorrer ou não uma exceção.
+
+Exemplo:
+
+````
+public class ExemploFinally {
+    public static void main(String[] args) {
+        try {
+            int[] numeros = {1, 2, 3};
+            System.out.println(numeros[5]); // Índice inválido!
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Erro: Índice fora dos limites do array.");
+        } finally {
+            System.out.println("Este bloco sempre será executado.");
+        }
+    }
+}
+
+🔹 Saída:
+
+Erro: Índice fora dos limites do array.
+Este bloco sempre será executado.
+````
+
+
+🔹 Lançando Exceções com throw
+O throw é usado para lançar uma exceção manualmente.
+
+Exemplo:
+
+````
+public class ExemploThrow {
+    static void verificarIdade(int idade) {
+        if (idade < 18) {
+            throw new IllegalArgumentException("Idade mínima é 18 anos.");
+        }
+        System.out.println("Acesso permitido.");
+    }
+
+    public static void main(String[] args) {
+        verificarIdade(15); // Isso vai lançar uma exceção!
+    }
+}
+
+
+🔹 Saída:
+Exception in thread "main" java.lang.IllegalArgumentException: Idade mínima é 18 anos.
+
+````
+
+🔹 Criando Exceções Personalizadas
+Podemos criar nossas próprias exceções estendendo a classe Exception ou RuntimeException.
+
+Exemplo:
+
+````
+class MinhaExcecao extends Exception {
+    public MinhaExcecao(String mensagem) {
+        super(mensagem);
+    }
+}
+
+public class ExemploExcecaoPersonalizada {
+    static void verificarNumero(int numero) throws MinhaExcecao {
+        if (numero < 0) {
+            throw new MinhaExcecao("Número negativo não permitido.");
+        }
+        System.out.println("Número aceito.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            verificarNumero(-5);
+        } catch (MinhaExcecao e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+}
+
+🔹 Saída:
+Erro: Número negativo não permitido.
+
+````
+---
+
+---
+
+# toString
+
+📌 O Método toString() em Java
+O método toString() em Java é usado para retornar uma representação em string de um objeto. Ele faz parte da classe Object, que é a superclasse de todas as classes em Java.
+
+Por padrão, o método toString() retorna o nome da classe seguido do código hash do objeto, mas podemos sobrescrevê-lo para fornecer uma saída mais útil.
+
+
+🔹 Exemplo 1: toString() Padrão
+Se não sobrescrevermos toString(), ele usará a implementação da classe Object.
+````
+class Produto {
+    String nome;
+    double preco;
+
+    Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+}
+
+public class TesteToString {
+    public static void main(String[] args) {
+        Produto p1 = new Produto("Notebook", 3500.00);
+        System.out.println(p1.toString()); // Chama o método padrão
+    }
+}
+
+🔹 Saída (algo como):
+Produto@1b6d3586
+
+````
+
+
+🔹 Exemplo 2: Sobrescrevendo toString()
+Podemos melhorar isso sobrescrevendo toString() na nossa classe.
+
+````
+class Produto {
+    String nome;
+    double preco;
+
+    Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    @Override
+    public String toString() {
+        return "Produto: " + nome + ", Preço: R$" + preco;
+    }
+}
+
+public class TesteToString {
+    public static void main(String[] args) {
+        Produto p1 = new Produto("Notebook", 3500.00);
+        System.out.println(p1); // toString() é chamado automaticamente
+    }
+}
+
+🔹 Saída:
+Produto: Notebook, Preço: R$3500.0
+
+````
+
+🔹 Exemplo 3: toString() e Herança
+Se tivermos uma classe que herda de outra, podemos reutilizar toString() da classe pai usando super.toString().
+````
+class Pessoa {
+    String nome;
+    
+    Pessoa(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome;
+    }
+}
+
+class Aluno extends Pessoa {
+    int matricula;
+
+    Aluno(String nome, int matricula) {
+        super(nome);
+        this.matricula = matricula;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Matrícula: " + matricula;
+    }
+}
+
+public class TesteHeranca {
+    public static void main(String[] args) {
+        Aluno aluno = new Aluno("João", 12345);
+        System.out.println(aluno);
+    }
+}
+
+🔹 Saída:
+Nome: João, Matrícula: 12345
+
+````
+✔ toString() ajuda a representar objetos de maneira legível.
+✔ Podemos sobrescrevê-lo para personalizar a saída.
+✔ Ele é chamado automaticamente quando imprimimos um objeto.
+✔ Pode ser reutilizado com super.toString() em herança.
+---
+
+---
+
+
